@@ -18,11 +18,20 @@
     <video id="video" src="sam.mp4" autoplay loop muted playsinline style="display: none;"></video>
 
     <script>
-      // Ensure the video starts playing
       document.addEventListener("DOMContentLoaded", function () {
         const video = document.querySelector("#video");
+
+        // Attempt to autoplay the video
         video.play().catch((error) => {
           console.error("Video autoplay failed:", error);
+          alert("Autoplay blocked. Please tap anywhere to start the video.");
+        });
+
+        // Fallback: Play video on user interaction
+        document.addEventListener("click", () => {
+          video.play().catch((error) => {
+            console.error("Video playback failed on click:", error);
+          });
         });
       });
     </script>
