@@ -5,6 +5,18 @@
     <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/1.7.2/aframe/build/aframe-ar.min.js"></script>
     <style>
       body { margin: 0; overflow: hidden; }
+      #playMessage {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.5em;
+        color: white;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 1em;
+        border-radius: 10px;
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -16,19 +28,22 @@
     </a-scene>
 
     <video id="video" src="sam.mp4" autoplay loop muted playsinline style="display: none;"></video>
+    <div id="playMessage">Tap anywhere to start the video</div>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const video = document.querySelector("#video");
+        const playMessage = document.querySelector("#playMessage");
 
         // Attempt to autoplay the video
         video.play().catch((error) => {
           console.error("Video autoplay failed:", error);
-          alert("Autoplay blocked. Please tap anywhere to start the video.");
+          playMessage.style.display = "block"; // Show the play message
         });
 
         // Fallback: Play video on user interaction
         document.addEventListener("click", () => {
+          playMessage.style.display = "none"; // Hide the play message
           video.play().catch((error) => {
             console.error("Video playback failed on click:", error);
           });
